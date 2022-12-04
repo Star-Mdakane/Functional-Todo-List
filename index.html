@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Functional Todo List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <h1>Functional Todo List</h1>
+        <div class="input-field">
+            <input type="text" placeholder="Add your todo item" class="input-text">
+            <button class="add-btn">Add</button>
+        </div>
+        <div class="filters">
+            <span id="all" class="active">All</span>
+            <span id="pending">Pending</span>
+            <span id="completed">Completed</span>
+        </div>
+        <ul class="task-list">
+            <li class="task">
+                <label for="1">
+                    <input type="checkbox" name="" id="1">
+                    <p>This is my task</p>
+                </label>
+                <div class="actions">
+                    <button class="edit">Edit</button>
+                    <button class="del">Delete</button>
+                </div>
+            </li>
+            <li class="task">
+                <label for="1">
+                    <input type="checkbox" name="" id="1">
+                    <p>This is my task</p>
+                </label>
+                <div class="actions">
+                    <button class="edit">Edit</button>
+                    <button class="del">Delete</button>
+                </div>
+            </li>
+            <li class="task">
+                <label for="1">
+                    <input type="checkbox" name="" id="1">
+                    <p>This is my task</p>
+                </label>
+                <div class="actions">
+                    <button class="edit">Edit</button>
+                    <button class="del">Delete</button>
+                </div>
+            </li>
+        </ul>
+        <footer class="footer">
+            <p>You have ? tasks remaining</p>
+            <button class="clear-btn">Clear List</button>
+        </footer>
+    </div>
+
+
+    <script src="app.js"></script>
+</body>
+
+</html>
