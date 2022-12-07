@@ -9,10 +9,16 @@ todos = JSON.parse(localStorage.getItem('todos'));
 
 addBtn.addEventListener('click', () => {
     let data = inputF.value;
-    todos = !todos ? [] : todos;
 
-    let taskData = { task: data, status: 'pending' }
-    todos.push(taskData);
+    if (!isEditable) {
+
+        todos = !todos ? [] : todos;
+        let taskData = { task: data, status: 'pending' }
+        todos.push(taskData);
+    } else {
+        isEditable = false;
+        todos[editId].task = data;
+    }
 
     inputF.value = '';
     localStorage.setItem('todos', JSON.stringify(todos));
@@ -31,8 +37,8 @@ function showItems() {
                         <p class='${completed}'>${todo.task}</p>
                     </label>
                     <div class="actions">
-                        <button class="edit">Edit</button>
-                        <button class="del">Delete</button>
+                        <button onclick='editTask(${id}, "${todo.task}")' class="edit">Edit</button>
+                        <button onclick='delTask(${id})' class="del">Delete</button>
                     </div>
                 </li>
             `
@@ -60,4 +66,19 @@ function statusUpdate(selectedTask) {
         todos[selectedTask.id].status = 'pending';
     }
     localStorage.setItem('todos', JSON.stringify(todos));
+}
+
+function editTask(taskId, editNane) {
+    editId = taskId;
+    isEditable = true;
+    inputF.value = editNane;
+    inputF.focus();
+    inputF.classList.add('active');
+}
+
+function delTask(delId) {
+    isEditable = false;
+    todos.splice(delId, 1);
+    localStorage.setItem('todos', JSON.stringify(todos));
+    showItems();
 }
