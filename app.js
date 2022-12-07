@@ -1,6 +1,7 @@
 const inputF = document.querySelector('.input-text');
 const addBtn = document.querySelector('.add-btn');
 const taskList = document.querySelector('.task-list');
+const clearTasks = document.querySelector('.clear-btn');
 
 let editId;
 let isEditable = false;
@@ -82,3 +83,9 @@ function delTask(delId) {
     localStorage.setItem('todos', JSON.stringify(todos));
     showItems();
 }
+
+clearTasks.addEventListener('click', () => {
+    todos = [];
+    localStorage.setItem('todos', JSON.stringify(todos));
+    showItems();
+})
