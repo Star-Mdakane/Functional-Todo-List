@@ -2,11 +2,20 @@ const inputF = document.querySelector('.input-text');
 const addBtn = document.querySelector('.add-btn');
 const taskList = document.querySelector('.task-list');
 const clearTasks = document.querySelector('.clear-btn');
+const filters = document.querySelectorAll('.filters span');
 
 let editId;
 let isEditable = false;
 
 todos = JSON.parse(localStorage.getItem('todos'));
+
+filters.forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelector('span.active').classList.remove('active');
+        btn.classList.add('active');
+        showItems(btn.id);
+    })
+})
 
 addBtn.addEventListener('click', () => {
     let data = inputF.value;
@@ -23,26 +32,29 @@ addBtn.addEventListener('click', () => {
 
     inputF.value = '';
     localStorage.setItem('todos', JSON.stringify(todos));
-    showItems();
+    showItems(document.querySelector('span.active').id);
 });
 
-function showItems() {
+function showItems(filter) {
     let liTag = '';
     if (todos) {
         todos.forEach((todo, id) => {
             let completed = todo.status == 'completed' ? 'checked' : '';
-            liTag += `
-                <li class="task">
-                    <label for="${id}">
-                        <input onclick='statusUpdate(this)' type="checkbox" name="" id="${id}" >
-                        <p class='${completed}'>${todo.task}</p>
-                    </label>
-                    <div class="actions">
-                        <button onclick='editTask(${id}, "${todo.task}")' class="edit">Edit</button>
-                        <button onclick='delTask(${id})' class="del">Delete</button>
-                    </div>
-                </li>
-            `
+            if (filter == todo.status || filter == 'all') {
+
+                liTag += `
+                    <li class="task">
+                        <label for="${id}">
+                            <input onclick='statusUpdate(this)' type="checkbox" name="" id="${id}" >
+                            <p class='${completed}'>${todo.task}</p>
+                        </label>
+                        <div class="actions">
+                            <button onclick='editTask(${id}, "${todo.task}")' class="edit">Edit</button>
+                            <button onclick='delTask(${id}, "${filter}")' class="del">Delete</button>
+                        </div>
+                    </li>
+                `;
+            }
         })
     }
 
@@ -55,7 +67,7 @@ function showItems() {
 
 }
 
-showItems();
+showItems('all');
 
 function statusUpdate(selectedTask) {
     let taskName = selectedTask.parentElement.lastElementChild;
@@ -81,7 +93,7 @@ function delTask(delId) {
     isEditable = false;
     todos.splice(delId, 1);
     localStorage.setItem('todos', JSON.stringify(todos));
-    showItems();
+    showItems(filter);
 }
 
 clearTasks.addEventListener('click', () => {
