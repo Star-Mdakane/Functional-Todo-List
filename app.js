@@ -23,11 +23,12 @@ function showItems() {
     let liTag = '';
     if (todos) {
         todos.forEach((todo, id) => {
+            let completed = todo.status == 'completed' ? 'checked' : '';
             liTag += `
                 <li class="task">
                     <label for="${id}">
-                        <input type="checkbox" name="" id="${id}">
-                        <p>${todo.task}</p>
+                        <input onclick='statusUpdate(this)' type="checkbox" name="" id="${id}" >
+                        <p class='${completed}'>${todo.task}</p>
                     </label>
                     <div class="actions">
                         <button class="edit">Edit</button>
@@ -48,3 +49,15 @@ function showItems() {
 }
 
 showItems();
+
+function statusUpdate(selectedTask) {
+    let taskName = selectedTask.parentElement.lastElementChild;
+    if (selectedTask.checked) {
+        taskName.classList.add('checked');
+        todos[selectedTask.id].status = 'completed';
+    } else {
+        taskName.classList.remove('checked');
+        todos[selectedTask.id].status = 'pending';
+    }
+    localStorage.setItem('todos', JSON.stringify(todos));
+}
