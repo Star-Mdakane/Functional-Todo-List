@@ -15,7 +15,7 @@ filters.forEach(btn => {
         btn.classList.add('active');
         showItems(btn.id);
     })
-})
+});
 
 addBtn.addEventListener('click', () => {
     let data = inputF.value;
@@ -100,4 +100,4 @@ clearTasks.addEventListener('click', () => {
     todos = [];
     localStorage.setItem('todos', JSON.stringify(todos));
     showItems();
-})
+});
